@@ -107,7 +107,7 @@ class MyApp extends StatelessWidget {
         ),
         body: ListView(
           children: [
-            Logo(),
+            LogoApp(),
             Image.asset(
               'images/lake.jpg',
               width: 600,
