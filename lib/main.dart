@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app/tapbox.dart';
 import 'favorite_button.dart';
+import 'logo.dart';
 import 'next_page.dart';
 
 void main() => runApp(const MyApp());
@@ -10,6 +13,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     // #docregion titleSection
     Widget titleSection = Container(
       padding: const EdgeInsets.all(32),
@@ -90,6 +94,11 @@ class MyApp extends StatelessWidget {
       ),
     );
 
+    Widget tapboxSection = const Padding(
+      padding: EdgeInsets.all(32),
+      child: Tapbox()
+    );
+
     return MaterialApp(
       title: 'Flutter layout demo',
       home: Scaffold(
@@ -98,6 +107,7 @@ class MyApp extends StatelessWidget {
         ),
         body: ListView(
           children: [
+            Logo(),
             Image.asset(
               'images/lake.jpg',
               width: 600,
@@ -108,16 +118,13 @@ class MyApp extends StatelessWidget {
             buttonSection,
             textSection,
             NavigateButton(),
-            Tapbox(),
+            tapboxSection,
           ],
         ),
       ),
     );
   }
 }
-
-
-
 
 class NavigateButton extends StatelessWidget {
   const NavigateButton({super.key});
@@ -136,3 +143,4 @@ class NavigateButton extends StatelessWidget {
     );
   }
 }
+
