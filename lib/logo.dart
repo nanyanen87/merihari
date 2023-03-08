@@ -22,7 +22,7 @@ class LogoWidget extends StatelessWidget {
 class AnimatedLogo extends AnimatedWidget {
   const AnimatedLogo({super.key, required Animation<double> animation})
       : super(listenable: animation);
-
+  //Tweenで決めた幅をCurvedで動く、その完了時間をdurationできめる
   // Make the Tweens static because they don't change.
   static final _opacityTween = Tween<double>(begin: 0.1, end: 1);
   static final _sizeTween = Tween<double>(begin: 0, end: 300);
@@ -61,7 +61,7 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     controller =
-        AnimationController(duration: const Duration(seconds: 2), vsync: this);
+        AnimationController(duration: const Duration(seconds: 5), vsync: this);
     animation = CurvedAnimation(parent: controller, curve: Curves.bounceOut)
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
