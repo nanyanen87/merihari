@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_app/tapbox.dart';
 import 'favorite_button.dart';
 import 'logo.dart';
 import 'next_page.dart';
+import 'package:http/http.dart' as http;
 
 void main() => runApp(const MyApp());
 
@@ -107,8 +110,9 @@ class MyApp extends StatelessWidget {
         ),
         body: ListView(
           children: [
+            CallApiButton(),
             LogoWidget(),
-            LogoApp(),
+            // LogoApp(),
             Image.asset(
               'images/lake.jpg',
               width: 600,
@@ -118,7 +122,7 @@ class MyApp extends StatelessWidget {
             titleSection,
             buttonSection,
             textSection,
-            NavigateButton(),
+            navigateSection,
             tapboxSection,
           ],
         ),
@@ -127,12 +131,17 @@ class MyApp extends StatelessWidget {
   }
 }
 
+Widget navigateSection = const Center(
+    child: NavigateButton()
+);
 class NavigateButton extends StatelessWidget {
   const NavigateButton({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+          minimumSize: const Size(10, 30)),
       onPressed: () {
         Navigator.of(context).push(
           MaterialPageRoute(
@@ -140,8 +149,45 @@ class NavigateButton extends StatelessWidget {
           ),
         );
       },
-      child: Text('next'),
+      child: const Text('next'),
     );
   }
 }
 
+class CallApiButton extends StatelessWidget {
+  const CallApiButton({super.key});
+
+  void _callAPI() async {
+
+    const headers = {
+      'Accept-Language': 'ja,en-US;q=0.9,en;q=0.8',
+      'Accept-Charset': 'application/x-www-form-urlencoded; charset=UTF-8',
+      'Origin': 'https://developer.riotgames.com',
+      'X-Riot-Token': 'RGAPI-50c6f4e4-7c24-4ff3-8018-a2767319a953'
+    };
+    var url = Uri.parse(
+      'https://asia.api.riotgames.com/riot/account/v1/accounts/by-riot-id/und3fined/8540',
+    );
+
+    var response = await http.get(url, headers: headers);
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
+  //   url = Uri.parse('https://reqbin.com/sample/post/json');
+  //   response = await http.post(url, body: {
+  //     'key': 'value',
+  //   });
+  //   print('Response status: ${response.statusCode}');
+  //   print('Response body: ${response.body}');
+  }
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        _callAPI();
+      },
+      child: Text('call'),
+    );
+  }
+
+}
